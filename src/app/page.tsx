@@ -3,15 +3,15 @@
 import Button from "@mui/material/Button";
 import Link from "next/link";
 
-import nextConfig from "../../next.config";
-const { publicRuntimeConfig } = nextConfig;
-
 export default function StarterPage() {
   const addScramble = async () => {
-    const response = await fetch(publicRuntimeConfig?.apiUrl + "/scrambles", {
-      cache: "no-store",
-      method: "POST",
-    });
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_API_URL + "/scrambles",
+      {
+        cache: "no-store",
+        method: "POST",
+      }
+    );
     const location = response.headers.get("Location");
     const scrambleId = location?.split("/").pop();
 

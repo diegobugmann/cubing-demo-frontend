@@ -1,6 +1,4 @@
 import Stopwatch from "@/components/Stopwatch";
-import nextConfig from "../../../../next.config";
-const { publicRuntimeConfig } = nextConfig;
 
 export default async function Page({
   params,
@@ -9,7 +7,7 @@ export default async function Page({
 }) {
   const id = (await params).id;
   const response = await fetch(
-    publicRuntimeConfig?.apiUrl + `/scrambles/${id}`,
+    process.env.NEXT_PUBLIC_API_URL + `/scrambles/${id}`,
     {
       cache: "no-store",
     }

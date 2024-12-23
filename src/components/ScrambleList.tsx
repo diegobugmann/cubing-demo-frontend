@@ -5,9 +5,6 @@ import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 
-import nextConfig from "../../next.config";
-const { publicRuntimeConfig } = nextConfig;
-
 export default function ScrambleList() {
   interface Post {
     id: number;
@@ -22,7 +19,8 @@ export default function ScrambleList() {
 
   const fetchScrambles = async (pageNumber: number) => {
     const response = await fetch(
-      publicRuntimeConfig?.apiUrl + `/scrambles?page=${pageNumber - 1}&size=15`,
+      process.env.NEXT_PUBLIC_API_URL +
+        `/scrambles?page=${pageNumber - 1}&size=15`,
       {
         cache: "no-store",
       }
@@ -37,7 +35,7 @@ export default function ScrambleList() {
   };
 
   const deleteScramble = async (id: number) => {
-    await fetch(publicRuntimeConfig?.apiUrl + `/scrambles/${id}`, {
+    await fetch(process.env.NEXT_PUBLIC_API_URL + `/scrambles/${id}`, {
       cache: "no-store",
       method: "DELETE",
     });
