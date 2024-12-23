@@ -18,7 +18,7 @@ export default async function Page({
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300 to-purple-400 text-center pt-28">
-      <h1>{data.movesAsString}</h1>
+      <h1 className="text-4xl">{data.movesAsString}</h1>
       <div className="mt-14">
         <Stopwatch id={id} />
       </div>
