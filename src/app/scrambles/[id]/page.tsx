@@ -1,4 +1,6 @@
 import Stopwatch from "@/components/Stopwatch";
+import nextConfig from "../../../../next.config";
+const { env } = nextConfig;
 
 export default async function Page({
   params,
@@ -6,12 +8,9 @@ export default async function Page({
   params: Promise<{ id: number }>;
 }) {
   const id = (await params).id;
-  const response = await fetch(
-    process.env.NEXT_PUBLIC_API_URL + `/scrambles/${id}`,
-    {
-      cache: "no-store",
-    }
-  );
+  const response = await fetch(env?.NEXT_PUBLIC_API_URL + `/scrambles/${id}`, {
+    cache: "no-store",
+  });
   const data = await response.json();
 
   return (
