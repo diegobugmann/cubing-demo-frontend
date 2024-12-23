@@ -1,4 +1,6 @@
 import Stopwatch from "@/components/Stopwatch";
+import nextConfig from "../../../../next.config";
+const { publicRuntimeConfig } = nextConfig;
 
 export default async function Page({
   params,
@@ -6,9 +8,12 @@ export default async function Page({
   params: Promise<{ id: number }>;
 }) {
   const id = (await params).id;
-  const response = await fetch(`http://localhost:8080/scrambles/${id}`, {
-    cache: "no-store",
-  });
+  const response = await fetch(
+    publicRuntimeConfig?.apiUrl + `/scrambles/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
   const data = await response.json();
 
   return (

@@ -3,9 +3,12 @@
 import Button from "@mui/material/Button";
 import Link from "next/link";
 
+import nextConfig from "../../next.config";
+const { publicRuntimeConfig } = nextConfig;
+
 export default function StarterPage() {
   const addScramble = async () => {
-    const response = await fetch("http://localhost:8080/scrambles", {
+    const response = await fetch(publicRuntimeConfig?.apiUrl + "/scrambles", {
       cache: "no-store",
       method: "POST",
     });
@@ -24,9 +27,9 @@ export default function StarterPage() {
           Welcome to my Speed Cube Application
         </h1>
         <h2 className="text-xl max-w-2xl mx-auto">
-          This app is designed to help you generate random Rubik's Cube
-          scrambles and time your solves. Whether you're a beginner or a pro,
-          we've got you covered!
+          This app is designed to help you generate random Rubik&apos;s Cube
+          scrambles and time your solves. Whether you&apos;re a beginner or a
+          pro, we&apos;ve got you covered!
         </h2>
       </div>
 

@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import nextConfig from "../../next.config";
+const { publicRuntimeConfig } = nextConfig;
 
 export default function Stopwatch({ id }: { id: number }) {
   const [spacebarPressed, setSpacebarPressed] = useState(false);
@@ -17,7 +19,7 @@ export default function Stopwatch({ id }: { id: number }) {
   }, [elapsedTime]);
 
   const updateScramble = useCallback(async () => {
-    await fetch(`http://localhost:8080/scrambles/${id}`, {
+    await fetch(publicRuntimeConfig?.apiUrl + `/scrambles/${id}`, {
       cache: "no-store",
       method: "PUT",
       headers: { "Content-Type": "application/json" },

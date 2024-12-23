@@ -1,18 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import Pagination from "@mui/material/Pagination";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 
+import nextConfig from "../../next.config";
+const { publicRuntimeConfig } = nextConfig;
+
 export default function ScrambleList() {
-  const [posts, setPosts] = useState([]);
+  interface Post {
+    id: number;
+    movesAsString: string;
+    time: number;
+    createdAt: string;
+  }
+
+  const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
-  const fetchScrambles = async (pageNumber) => {
+  const fetchScrambles = async (pageNumber: number) => {
     const response = await fetch(
-      `http://localhost:8080/scrambles?page=${pageNumber - 1}&size=15`,
+      publicRuntimeConfig?.apiUrl + `/scrambles?page=${pageNumber - 1}&size=15`,
       {
         cache: "no-store",
       }
@@ -26,8 +36,8 @@ export default function ScrambleList() {
     setTotalPages(data.totalPages);
   };
 
-  const deleteScramble = async (id) => {
-    await fetch(`http://localhost:8080/scrambles/${id}`, {
+  const deleteScramble = async (id: number) => {
+    await fetch(publicRuntimeConfig?.apiUrl + `/scrambles/${id}`, {
       cache: "no-store",
       method: "DELETE",
     });
@@ -38,7 +48,10 @@ export default function ScrambleList() {
     fetchScrambles(page);
   }, [page]);
 
-  const handlePageChange = (event, value) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: SetStateAction<number>
+  ) => {
     setPage(value);
   };
 
@@ -93,7 +106,7 @@ export default function ScrambleList() {
             ) : (
               <tr>
                 <td
-                  colSpan="4"
+                  colSpan={4}
                   className="px-4 py-2 text-center text-sm text-gray-500"
                 >
                   No history available
